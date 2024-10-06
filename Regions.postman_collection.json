@@ -1,0 +1,1191 @@
+{
+	"info": {
+		"_postman_id": "cfc15967-e7bf-46a5-89a3-ae5c415bc5be",
+		"name": "Regions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17766263"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Request defaut values, validate schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"ru\", \"kg\", \"kz\", \"cz\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}\r",
+									"pm.test(\"Valid count of elements\", function(){\r",
+									"    pm.expect(jsonData.items.length).is.equal(22)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with KZ param",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"kz\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Valid count of elements\", function(){\r",
+									"    pm.expect(jsonData.items.length).is.equal(5)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code=kz&page_size=5&page=1",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": "kz"
+								},
+								{
+									"key": "page_size",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with Ru, page size 10, page 2 params",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"ru\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code=ru&page_size=10&page=2",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": "ru"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with Kg param",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"kg\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code=kg",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": "kg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with CZ param",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"cz\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code=cz",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": "cz"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with page_size 15 param",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Valid count of elements\", function(){\r",
+									"    pm.expect(jsonData.items.length).is.equal(15)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?page_size=15",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with q=рск",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"ru\", \"kg\", \"kz\", \"cz\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code=cz&page_size=10&page=2&q=рск",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": "cz"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "q",
+									"value": "рск"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with q=СКВ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"ru\", \"kg\", \"kz\", \"cz\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?q=СКВ",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "СКВ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with q=СК",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'q' должен быть не менее 3 символов\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?q=СК",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "СК"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with query = empty value",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"if (jsonData.items && Array.isArray(jsonData.items)) {\r",
+									"    let itemsCount = jsonData.items.length;\r",
+									"    console.log(itemsCount + ' items returned')\r",
+									"}\r",
+									"\r",
+									"const schema = {\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"total\": {\r",
+									"      \"type\": \"integer\",\r",
+									"      \"minimum\": 0\r",
+									"    },\r",
+									"    \"items\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"          \"id\": {\r",
+									"            \"type\": \"integer\",\r",
+									"            \"minimum\": 1\r",
+									"          },\r",
+									"          \"name\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"code\": {\r",
+									"            \"type\": \"string\"\r",
+									"          },\r",
+									"          \"country\": {\r",
+									"            \"type\": \"object\",\r",
+									"            \"properties\": {\r",
+									"              \"name\": {\r",
+									"                \"type\": \"string\"\r",
+									"              },\r",
+									"              \"code\": {\r",
+									"                \"type\": \"string\",\r",
+									"                \"enum\": [\"ru\", \"kg\", \"kz\", \"cz\"]\r",
+									"              }\r",
+									"            },\r",
+									"            \"required\": [\"name\", \"code\"]\r",
+									"          }\r",
+									"        },\r",
+									"        \"required\": [\"id\", \"name\", \"code\", \"country\"]\r",
+									"      }\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\"total\", \"items\"],\r",
+									"  \"additionalProperties\": false\r",
+									"};\r",
+									"\r",
+									"const Ajv = require('ajv');\r",
+									"const ajv = new Ajv();\r",
+									"\r",
+									"const valid = ajv.validate(schema, jsonData);\r",
+									"\r",
+									"pm.test(\"Valid schema\", function(){\r",
+									"    pm.expect(valid).is.true\r",
+									"})\r",
+									"\r",
+									"if (!valid) {\r",
+									"    console.log(ajv.errors);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?q",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with N/A country code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'country_code' может быть одним из следующих значений: ru, kg, kz, cz\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code=by",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": "by"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with empty country code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'country_code' может быть одним из следующих значений: ru, kg, kz, cz\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?country_code",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "country_code",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with page size > 15",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'page_size' может быть одним из следующих значений: 5, 10, 15\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?page_size=20",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with empty page size",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'page_size' длжен быть целым числом\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?page_size",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "page_size",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with page 0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'page' длжен быть целым числом\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?page=0",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request with empty page param",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json()\r",
+									"pm.test(\"Message contains the correct error message\", function () {\r",
+									"    pm.expect(jsonData.error.message).to.eql(\"Параметр 'page' длжен быть целым числом\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://regions-test.2gis.com/1.0/regions?page",
+							"protocol": "https",
+							"host": [
+								"regions-test",
+								"2gis",
+								"com"
+							],
+							"path": [
+								"1.0",
+								"regions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
